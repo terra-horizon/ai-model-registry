@@ -10,7 +10,7 @@ from core.container import Container
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     settings = get_settings()
-    print(f"Starting {settings.app_name} in {settings.app_env} mode...")
+    print(f"Starting {settings.app_name}...")
     yield
     print(f"Shutting down {settings.app_name}...")
 
@@ -22,7 +22,6 @@ def create_app() -> FastAPI:
         {
             "app_name": settings.app_name,
             "app_version": settings.app_version,
-            "app_env": settings.app_env,
             "debug": settings.debug,
         }
     )
