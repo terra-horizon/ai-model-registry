@@ -5,9 +5,9 @@ from dependency_injector.wiring import inject, Provide
 from fastapi import HTTPException, Security, status, Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-from core.container import Container
-from security.models import CurrentUser
-from security.token_validator import TokenValidator
+from app.core.container import Container
+from app.security.models import CurrentUser
+from app.security.token_validator import TokenValidator
 
 bearer_scheme = HTTPBearer(auto_error=True)
 

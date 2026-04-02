@@ -2,7 +2,7 @@ import httpx
 import jwt
 from jwt import PyJWKClient
 
-from core.config import OidcSettings
+from app.core.config import OidcSettings
 
 
 class TokenValidator:

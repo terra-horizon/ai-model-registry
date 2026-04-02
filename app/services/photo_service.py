@@ -1,6 +1,6 @@
-from fastapi import HTTPException, UploadFile
+from fastapi import UploadFile
 
-from schemas.photos import PhotoAnalysisResponse
+from app.schemas.photos import PhotoAnalysisResponse
 
 
 class PhotoService:

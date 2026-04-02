@@ -1,15 +1,15 @@
 from dependency_injector import containers, providers
 
-from core.config import get_oidc_settings
-from security.token_validator import TokenValidator
-from services.photo_service import PhotoService
+from app.core.config import get_oidc_settings
+from app.security.token_validator import TokenValidator
+from app.services.photo_service import PhotoService
 
 
 class Container(containers.DeclarativeContainer):
     wiring_config = containers.WiringConfiguration(
         modules=[
-            "api.photos",
-            "security.current_user",
+            "app.api.photos",
+            "app.security.current_user",
         ])
 
     config = providers.Configuration()

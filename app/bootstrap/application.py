@@ -2,9 +2,9 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from bootstrap.routes import configure_routes
-from core.config import get_settings
-from core.container import Container
+from app.bootstrap.routes import configure_routes
+from app.core.config import get_settings
+from app.core.container import Container
 
 
 @asynccontextmanager
