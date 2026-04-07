@@ -148,5 +148,5 @@ htmlcov
 
 # EXAMPLE USAGE FOR FAST API PROJECT:
 # cp frameworks/fast_api.gitignore .gitignore
-Dockerfile
+
 compose.yml
