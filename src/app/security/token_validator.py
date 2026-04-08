@@ -1,5 +1,6 @@
 import httpx
 import jwt
+from fastapi import HTTPException
 from jwt import PyJWKClient
 
 from app.core.config import OidcSettings
@@ -16,9 +17,16 @@ class TokenValidator:
             f"{self._settings.issuer.rstrip('/')}"
             "/.well-known/openid-configuration"
         )
-        response = httpx.get(discovery_url, timeout=10.0)
-        response.raise_for_status()
-        return response.json()
+        try:
+            response = httpx.get(discovery_url, timeout=10.0)
+            response.raise_for_status()
+            return response.json()
+        except httpx.HTTPStatusError as exc:
+            raise HTTPException(status_code=500, detail="Failed to communicate with discovery endpoint") from exc
+        except httpx.HTTPError as exc:
+            raise HTTPException(status_code=500, detail="Failed to communicate with discovery endpoint") from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=500, detail="Discovery endpoint returned invalid JSON") from exc
 
     def validate_access_token(self, token: str) -> dict:
         signing_key = self._jwks_client.get_signing_key_from_jwt(token)
