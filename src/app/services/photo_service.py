@@ -1,5 +1,6 @@
 import base64
 
+import structlog
 from fastapi import HTTPException
 
 from app.schemas.photos import PhotoAnalysisResponse, PhotoBase64Request
@@ -7,8 +8,10 @@ from app.schemas.photos import PhotoAnalysisResponse, PhotoBase64Request
 
 class PhotoService:
     allowed_content_types = {"image/jpeg", "image/png", "image/webp", }
+    logger = structlog.get_logger()
 
     def _detect_content_type(self, data: bytes) -> str | None:
+        self.logger.info("Detecting content type for", data)
         if data.startswith(b"\xff\xd8"):
             return "image/jpeg"
         if data.startswith(b"\x89PNG"):
@@ -18,6 +21,7 @@ class PhotoService:
         return None
 
     async def inspect_photo(self, request: PhotoBase64Request) -> PhotoAnalysisResponse:
+        self.logger.info("Inspecting photo for", request)
         try:
             image_bytes = base64.b64decode(request.image_base64, validate=True)
         except Exception:

@@ -1,10 +1,13 @@
 from contextlib import asynccontextmanager
 
+import structlog
 from fastapi import FastAPI
 
+from app.bootstrap.logging import configure_logging
 from app.bootstrap.routes import configure_routes
 from app.core.config import get_settings
 from app.core.container import Container
+from app.middleware.logging import LoggingMiddleware
 
 
 @asynccontextmanager
@@ -25,12 +28,17 @@ def create_app() -> FastAPI:
             "debug": settings.debug,
         }
     )
+    configure_logging(
+        json_logs=settings.debug,
+        log_level=settings.verbosity,
+    )
     app = FastAPI(
         title=settings.app_name,
         version=settings.app_version,
         debug=settings.debug,
         lifespan=lifespan,
     )
+    app.add_middleware(LoggingMiddleware)
     app.container = container
     configure_routes(app)
 

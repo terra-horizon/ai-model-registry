@@ -1,5 +1,6 @@
 from typing import Annotated
 
+import structlog
 from dependency_injector.wiring import inject, Provide
 from fastapi import APIRouter, Depends, File, UploadFile, Security
 
@@ -19,4 +20,6 @@ async def inspect_photo(
         current_user: Annotated[CurrentUser, Security(get_current_user)],
         photo_service: Annotated[PhotoService, Depends(Provide[Container.photo_service])],
 ) -> PhotoAnalysisResponse:
+    logger = structlog.get_logger()
+    logger.info("Inferring", request)
     return await photo_service.inspect_photo(request)

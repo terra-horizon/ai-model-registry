@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     app_name: str = Field(default="My FastAPI API", alias="APP_NAME")
     app_version: str = Field(default="1.0.0", alias="APP_VERSION")
     debug: bool = Field(default=False, alias="DEBUG")
+    verbosity: str = Field(default="ERROR", alias="VERBOSITY")
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", case_sensitive=False, extra="ignore", )
 
