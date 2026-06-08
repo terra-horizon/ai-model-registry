@@ -1,0 +1,34 @@
+name: "AI Model Registry Smoke Test (On-Demand)"
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Branch, tag, or commit SHA to test"
+        required: true
+        default: "main"
+
+jobs:
+  api-tests:
+    name: AI Model Registry Smoke Test
+    runs-on: ubuntu-latest
+
+    env:
+      TEST_MODEL_REGISTRY_BASEURL: ${{ secrets.TEST_MODEL_REGISTRY_BASEURL }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref }}
+
+      - name: Run Newman CLI reporter
+        run: |
+          set -o pipefail
+          docker run --rm \
+            -v "${{ github.workspace }}:/etc/newman" \
+            postman/newman:6-ubuntu \
+            run tests/TERRA-AI-Model-Registry-Smoke-Test.postman_collection.json \
+            --timeout-request 30000 \
+            --env-var "modelRegistryBaseUrl=${{ env.TEST_MODEL_REGISTRY_BASEURL }}" \
+            --reporters cli,emojitrain

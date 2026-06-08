@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "33333333-4444-5555-6666-777777777777",
+		"name": "TERRA-AI-Model-Registry-Smoke-Test",
+		"description": "Minimal smoke test for AI Model Registry: public health endpoint only, no authorization required.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AI Model Registry Healthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    pm.test(\"AI Model Registry healthcheck returned 200\", () => {",
+							"        pm.expect(pm.response.code).to.eql(200);",
+							"    });",
+							"",
+							"    const resp = pm.response.json();",
+							"",
+							"    pm.test(\"Healthcheck response is healthy\", () => {",
+							"        pm.expect(resp).to.be.an(\"object\");",
+							"        pm.expect(resp.status).to.eql(\"healthy\");",
+							"    });",
+							"}",
+							"else {",
+							"    pm.test(\"AI Model Registry healthcheck failed\", () => {",
+							"        pm.expect(pm.response.code, pm.response.text()).to.eql(200);",
+							"    });",
+							"    pm.execution.setNextRequest(null);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{modelRegistryBaseUrl}}/api/health",
+					"host": [
+						"{{modelRegistryBaseUrl}}"
+					],
+					"path": [
+						"api",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
