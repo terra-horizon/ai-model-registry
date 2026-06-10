@@ -1,5 +1,5 @@
 ﻿
-namespace DataGEMS.Gateway.Resources
+namespace Terra.AiModelRegistry.Resources
 {
 	public class MySharedResources
 	{
