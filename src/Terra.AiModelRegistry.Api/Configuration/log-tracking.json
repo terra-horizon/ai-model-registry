@@ -1,0 +1,16 @@
+{
+	"Tracking": {
+		"Correlation": {
+			"HeaderName": "x-tracking-correlation",
+			"LogAs": "TerraCorrelationId"
+		},
+		"Principal": {
+			"LogSubject": true,
+			"SubjectAs": "UserId",
+			"LogUsername": false,
+			"UsernameAs": "Username",
+			"LogClient": true,
+			"ClientAs": "ClientId"
+		}
+	}
+}

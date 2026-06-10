@@ -1,0 +1,30 @@
+{
+	"AAIService": {
+		"Service": {
+			"Scope": "terra-ai-model-registry-keycloak-admin",
+			"BaseUrl": "%{AAIBaseUrl}%",
+			"ContextGrantGroupPrefix": "ctx-grant",
+			"ContextGrantTypeAttributeName": "target-type",
+			"ContextGrantTypeUserAttributeValue": "usr",
+			"ContextGrantTypeGroupAttributeValue": "grp",
+			"ContextSemanticsAttributeName": "semantics",
+			"GroupsEndpoint": "groups",
+			"GroupRoleMappingsEndpoint": "groups/{groupId}/role-mappings/realm",
+			"GroupEndpoint": "groups/{groupId}",
+			"GroupChildrenEndpoint": "groups/{groupId}/children",
+			"RolesEndpoint": "roles/{roleName}",
+			"UserGroupsEndpoint": "users/{userId}/groups",
+			"UserGroupMembershipEndpoint": "users/{userId}/groups/{groupId}"
+		},
+		"Cache": {
+			"LookupCache": {
+				"Prefix": "%{CacheDisambiguation}%",
+				"KeyPattern": "{prefix}:AAI:{kind}:{key}:v0",
+				//2 minutes in seconds = 120
+				"SlidingExpirationSeconds": 120,
+				//5 minutes in seconds = 300
+				"AbsoluteExpirationSeconds": 300
+			}
+		}
+	}
+}

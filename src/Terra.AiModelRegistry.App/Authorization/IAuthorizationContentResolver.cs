@@ -3,18 +3,12 @@ namespace Terra.AiModelRegistry.App.Authorization
 {
 	public interface IAuthorizationContentResolver
 	{
-		Boolean HasAuthenticated();
-		String CurrentUser();
+        public Boolean HasAuthenticated();
 
-		Task<Guid?> CurrentUserId();
-		Task<String> SubjectIdOfCurrentUser();
-		Task<String> SubjectIdOfUserId(Guid? userId);
-		Task<String> SubjectIdOfUserIdentifier(String userIdentifier);
+        public String CurrentUser();
 
-		Task<Boolean> HasPermission(params String[] permissions);
+        public Task<Boolean> HasPermission(params String[] permissions);
 
-		ISet<String> PermissionsOfContextRoles(IEnumerable<String> roles);
-
-		Task<List<String>> ContextRolesOf();
-	}
+        public ISet<String> PermissionsOfContextRoles(IEnumerable<String> roles);
+    }
 }

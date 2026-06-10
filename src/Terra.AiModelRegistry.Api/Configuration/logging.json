@@ -1,0 +1,24 @@
+{
+	"Serilog": {
+		"Using": [ "Serilog.Expressions", "Serilog.Sinks.Console" ],
+		"Properties": {
+			"Application": "%{LogAsApplication}%"
+		},
+		"MinimumLevel": {
+			"Default": "%{DefaultLogLevel}%",
+			"Override": {
+				"Microsoft": "Warning",
+				"Terra.AiModelRegistry": "%{DefaultLogLevel}%",
+				"Cite": "Warning",
+				"accounting": "Information"
+			}
+		},
+		"WriteTo:Console": {
+			"Name": "Console",
+			"Args": {
+				"formatter": "Serilog.Formatting.Compact.CompactJsonFormatter, Serilog.Formatting.Compact"
+			}
+		},
+		"Enrich": [ "FromLogContext", "WithMachineName", "WithProcessId", "WithThreadId" ]
+	}
+}

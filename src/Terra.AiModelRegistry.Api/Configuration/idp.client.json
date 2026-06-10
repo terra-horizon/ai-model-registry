@@ -1,0 +1,15 @@
+{
+	"Idp": {
+		"Client": {
+			"Authority": "%{IdpAuthority}%",
+			"ClientId": "terra-ai-model-registry",
+			"ClientSecret": "%{IdpClientSecret}%",
+			"ClientAccessTokenUrl": "%{IdpClientAccessTokenUrl}%",
+			"RequireHttps": true,
+			"ValidateIssuer": true,
+			"ValidateAudience": true,
+			"ValidateIssuerSigningKey": true,
+			"MapInboundClaims": false
+		}
+	}
+}

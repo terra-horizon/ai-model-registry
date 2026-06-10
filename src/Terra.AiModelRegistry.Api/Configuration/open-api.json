@@ -1,0 +1,34 @@
+{
+	"OpenApi": {
+		"Environments": [ "Development", "Staging" ],
+		"Version": "v1",
+		"Title": "Terra AI Model Registry",
+		"Description": "AI model registry for managing and serving machine learning models",
+		"Terms": {
+			"Url": "https://terra-horizon.github.io/"
+		},
+		"Contact": {
+			"Name": "TERRA helpdesk",
+			"Url": "https://terra-horizon.eu/contact-us/"
+		},
+		"License": {
+			"Name": "EUPL-1.2 license",
+			"Url": "https://interoperable-europe.ec.europa.eu/sites/default/files/custom-page/attachment/2020-03/EUPL-1.2%20EN.txt"
+		},
+		"BasePath": "%{OpenApiBasePath}%",
+		"Endpoint": "%{OpenApiEndpoint}%",
+		"OAuth2": {
+			"AuthorizationUrl": "%{OpenApiOAuth2AuthorizationUrl}%",
+			"TokenUrl": "%{OpenApiOAuth2TokenUrl}%",
+			"Scopes": {
+				"openid": "OpenID Connect",
+				"profile": "User profile",
+				"email": "Email",
+				"terra-ai-model-registry": "Terra AI Model Registry"
+			},
+			"ClientId": "swagger-client",
+			"ClientName": "Swagger UI - Terra AI Model Registry - terra-ai-model-registry",
+			"UsePkce": false
+		}
+	}
+}
