@@ -4,11 +4,6 @@ using Cite.Tools.Logging.Extensions;
 using Terra.AiModelRegistry.App.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Terra.AiModelRegistry.App.Service.Version
 {

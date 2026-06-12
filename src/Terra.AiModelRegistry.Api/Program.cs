@@ -83,6 +83,10 @@ namespace Terra.AiModelRegistry.Api
 							.AddJsonFileInPaths("permissions.json", sharedConfigPath, "Configuration")
 							.AddJsonFileInPaths("permissions.override.json", sharedConfigPath, "Configuration")
 							.AddJsonFileInPaths($"permissions.{env.EnvironmentName}.json", sharedConfigPath, "Configuration")
+							//s3 object storage
+							.AddJsonFileInPaths("s3-object-storage.json", sharedConfigPath, "Configuration")
+							.AddJsonFileInPaths("s3-object-storage.override.json", sharedConfigPath, "Configuration")
+							.AddJsonFileInPaths($"s3-object-storage.{env.EnvironmentName}.json", sharedConfigPath, "Configuration")
 							//service aai
 							.AddJsonFileInPaths("service-aai.json", sharedConfigPath, "Configuration")
 							.AddJsonFileInPaths("service-aai.override.json", sharedConfigPath, "Configuration")

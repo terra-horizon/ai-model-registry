@@ -8,6 +8,7 @@
 
 
 	<ItemGroup>
+		<PackageReference Include="AWSSDK.S3" Version="4.0.24.3" />
 		<PackageReference Include="Cite.Tools.Auth" Version="8.0.1" />
 		<PackageReference Include="Cite.Tools.Cache" Version="8.0.0" />
 		<PackageReference Include="Cite.Tools.Common" Version="8.0.0" />

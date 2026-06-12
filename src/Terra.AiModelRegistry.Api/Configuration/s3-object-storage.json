@@ -1,0 +1,9 @@
+{
+  "S3ObjectStorage": {
+    "Endpoint": "%{S3ObjectStorageEndpoint}%",
+    "AccessKey": "%{S3ObjectStorageAccessKey}%",
+    "SecretKey": "%{S3ObjectStorageSecretKey}%",
+    "BucketName": "default",
+    "Region": "us-east-1"
+  }
+}

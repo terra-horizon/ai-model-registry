@@ -28,6 +28,7 @@ using Microsoft.EntityFrameworkCore;
 using Terra.AiModelRegistry.Api.Transaction;
 using Cite.Tools.Data.Deleter.Extensions;
 using Terra.AiModelRegistry.App.Service.Version;
+using Terra.AiModelRegistry.App.Service.S3ObjectStorage;
 
 namespace Terra.AiModelRegistry.Api
 {
@@ -75,6 +76,7 @@ namespace Terra.AiModelRegistry.Api
 			;
 
 			services
+				.AddS3ObjectStorageServices(this._config.GetSection("S3ObjectStorage")) //S3 Object Storage Service
 				.AddScoped<IVersionInfoService, VersionInfoService>()
 			;
 
