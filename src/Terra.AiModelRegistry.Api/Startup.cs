@@ -28,7 +28,6 @@ using Microsoft.EntityFrameworkCore;
 using Terra.AiModelRegistry.Api.Transaction;
 using Cite.Tools.Data.Deleter.Extensions;
 using Terra.AiModelRegistry.App.Service.Version;
-using Terra.AiModelRegistry.App.Service.AAI;
 
 namespace Terra.AiModelRegistry.Api
 {
@@ -131,7 +130,6 @@ namespace Terra.AiModelRegistry.Api
 				.UseAuthorization() //Authorization
 				.UseMiddleware(typeof(LogTrackingPrincipalMiddleware)) //Log Entry Middleware
 				.UseMiddleware(typeof(AccessTokenInterceptMiddleware)) //Bearer Authorization AccessToken interception
-				.UseMiddleware(typeof(UserSyncMiddleware)) //User sync to store and update request user
 				.UseEndpoints(endpoints => //Endpoints
 				{
 					endpoints.MapControllers();

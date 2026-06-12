@@ -5,6 +5,7 @@ using Terra.AiModelRegistry.Api.Validation;
 using Terra.AiModelRegistry.App.Service.Version;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using Terra.AiModelRegistry.Api.Model;
 
 namespace Terra.AiModelRegistry.Api.Controllers
 {
@@ -25,7 +26,7 @@ namespace Terra.AiModelRegistry.Api.Controllers
 		[HttpGet("current")]
 		[ModelStateValidationFilter]
 		[SwaggerOperation(Summary = "Retrieve current app version")]
-		[SwaggerResponse(statusCode: 200, description: "The current app version", type: typeof(QueryResult<App.Model.VersionInfo>))]
+		[SwaggerResponse(statusCode: 200, description: "The current app version", type: typeof(List<App.Model.VersionInfo>))]
 		[SwaggerResponse(statusCode: 400, description: "Validation problem with the request")]
 		[SwaggerResponse(statusCode: 404, description: "Could not locate item")]
 		[SwaggerResponse(statusCode: 500, description: "Internal error")]
