@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Terra.AiModelRegistry.App.Common.Enum
+namespace Terra.AiModelRegistry.App.Common
 {
 	public enum ModelReferenceKind : short
 	{
