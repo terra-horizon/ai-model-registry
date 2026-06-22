@@ -32,8 +32,4 @@
     <ProjectReference Include="..\Terra.AiModelRegistry.Resources\Terra.AiModelRegistry.Resources.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Deleter\" />
-  </ItemGroup>
-
 </Project>

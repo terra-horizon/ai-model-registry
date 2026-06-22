@@ -1,6 +1,4 @@
-﻿using Terra.AiModelRegistry.App.Common.Enum;
-
-namespace Terra.AiModelRegistry.App.Common.Types
+﻿namespace Terra.AiModelRegistry.App.Common.Types
 {
 	public class DataLocation
 	{

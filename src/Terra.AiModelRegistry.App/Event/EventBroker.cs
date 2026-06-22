@@ -39,5 +39,31 @@ namespace Terra.AiModelRegistry.App.Event
 		}
 
 		#endregion
+
+		#region AiModelDefinition Deleted
+
+		private EventHandler<OnAiModelDefinitionDeletedArgs> _AiModelDefinitionDeleted;
+		public event EventHandler<OnAiModelDefinitionDeletedArgs> AiModelDefinitionDeleted
+		{
+			add { this._AiModelDefinitionDeleted += value; }
+			remove { this._AiModelDefinitionDeleted -= value; }
+		}
+
+		public void EmitAiModelDefinitionDeleted(Guid aiModelDefinitionId)
+		{
+			this.EmitAiModelDefinitionDeleted(this, new List<Guid>() { aiModelDefinitionId });
+		}
+
+		public void EmitAiModelDefinitionDeleted(IEnumerable<Guid> aiModelDefinitionIds)
+		{
+			this.EmitAiModelDefinitionDeleted(this, aiModelDefinitionIds);
+		}
+
+		public void EmitAiModelDefinitionDeleted(object sender, IEnumerable<Guid> aiModelDefinitionIds)
+		{
+			this._AiModelDefinitionDeleted?.Invoke(sender, new OnAiModelDefinitionDeletedArgs(aiModelDefinitionIds));
+		}
+
+		#endregion
 	}
 }

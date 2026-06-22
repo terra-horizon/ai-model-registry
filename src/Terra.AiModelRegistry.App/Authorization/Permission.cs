@@ -11,6 +11,7 @@ namespace Terra.AiModelRegistry.App.Authorization
 		//AiModelDefinition
 		public const String CreateAiModelDefinition = "CreateAiModelDefinition";
 		public const String EditAiModelDefinition = "EditAiModelDefinition";
+		public const String DeleteAiModelDefinition = "DeleteAiModelDefinition";
 		//User
 		public const String BrowseUser = "BrowseUser";
 		public const String BrowseUserGroup = "BrowseUserGroup";

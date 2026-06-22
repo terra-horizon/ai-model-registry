@@ -7,5 +7,6 @@ namespace Terra.AiModelRegistry.App.Service.AiModel
     {
         Task<AiModelDefinition> CreateAsync(AiModelDefinitionCreate model, IFieldSet fields = null);
         Task<AiModelDefinition> PatchAsync(AiModelDefinitionPatch model, IFieldSet fields = null);
+        Task DeleteAndSaveAsync(Guid id);
     }
 }

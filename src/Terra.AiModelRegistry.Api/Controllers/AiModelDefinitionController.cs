@@ -166,7 +166,7 @@ namespace Terra.AiModelRegistry.Api.Controllers
 		[HttpPost("patch")]
 		[Authorize]
 		[ModelStateValidationFilter]
-		[ValidationFilter(typeof(App.Model.AiModelDefinitionPatch.CreateValidator), "model")]
+		[ValidationFilter(typeof(App.Model.AiModelDefinitionPatch.PatchValidator), "model")]
 		[ServiceFilter(typeof(AppTransactionFilter))]
 		[SwaggerOperation(Summary = "Patch ai model definition")]
 		[SwaggerResponse(statusCode: 200, description: "The patched ai model definition", type: typeof(App.Model.AiModelDefinition))]
@@ -219,7 +219,7 @@ namespace Terra.AiModelRegistry.Api.Controllers
 		{
 			this._logger.Debug(new MapLogEntry("delete").And("type", nameof(App.Model.AiModelDefinition)).And("id", id));
 
-			await this._aiModelService.DeleteAsync(id);
+			await this._aiModelService.DeleteAndSaveAsync(id);
 
 			this._accountingService.AccountFor(KnownActions.Delete, KnownResources.AiModel.AsAccountable());
 		}

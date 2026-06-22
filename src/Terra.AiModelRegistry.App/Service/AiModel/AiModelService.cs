@@ -1,4 +1,5 @@
-﻿using Cite.Tools.Data.Builder;
+﻿using Cite.Tools.Common.Extensions;
+using Cite.Tools.Data.Builder;
 using Cite.Tools.Data.Deleter;
 using Cite.Tools.Data.Query;
 using Cite.Tools.FieldSet;
@@ -7,6 +8,7 @@ using Cite.Tools.Logging;
 using Cite.Tools.Logging.Extensions;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 using System.Text;
 using Terra.AiModelRegistry.App.Authorization;
@@ -133,6 +135,16 @@ namespace Terra.AiModelRegistry.App.Service.AiModel
 			return patched;
 		}
 
+		public async Task DeleteAndSaveAsync(Guid id)
+		{
+			this._logger.Debug("deleting AiModelDefinition: {id}", id);
 
+			await this._authorizationService.AuthorizeForce(Permission.DeleteAiModelDefinition);
+
+			Data.AiModelDefinition data = await this._dbContext.AiModelDefinitions.FindAsync(id);
+			if (data == null) throw new TerraNotFoundException(this._localizer["general_notFound", id, nameof(Model.AiModelDefinition)]);
+
+			await this._deleterFactory.Deleter<AiModelDefinitionDeleter>().DeleteAndSave(id.AsArray());
+		}
 	}
 }
