@@ -22,7 +22,7 @@ using Terra.AiModelRegistry.App.Service.S3ObjectStorage;
 
 namespace Terra.AiModelRegistry.App.Service.AiModel
 {
-	public class AiModelService
+	public class AiModelService : IAiModelService
 	{
 		private readonly AppDbContext _dbContext;
 		private readonly BuilderFactory _builderFactory;

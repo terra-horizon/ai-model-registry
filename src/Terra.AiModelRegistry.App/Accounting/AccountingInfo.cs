@@ -7,6 +7,8 @@ namespace Terra.AiModelRegistry.App.Accounting
 		Query = 1,
 		Persist = 2,
 		Delete = 3,
+		Create = 4,
+		Patch = 5,
 	}
 
 	public enum KnownUnits : short

@@ -27,6 +27,7 @@ using Terra.AiModelRegistry.App.ErrorCode;
 using Terra.AiModelRegistry.App.Event;
 using Terra.AiModelRegistry.App.Formatting;
 using Terra.AiModelRegistry.App.LogTracking;
+using Terra.AiModelRegistry.App.Service.AiModel;
 using Terra.AiModelRegistry.App.Service.Convention;
 using Terra.AiModelRegistry.App.Service.S3ObjectStorage;
 using Terra.AiModelRegistry.App.Service.Version;
@@ -79,6 +80,7 @@ namespace Terra.AiModelRegistry.Api
 			services
 				.AddS3ObjectStorageServices(this._config.GetSection("S3ObjectStorage")) //S3 Object Storage Service
                 .AddConventionServices() //Conventions
+				.AddAiModelServices() //AI Model related services
                 .AddScoped<IVersionInfoService, VersionInfoService>()
 			;
 
