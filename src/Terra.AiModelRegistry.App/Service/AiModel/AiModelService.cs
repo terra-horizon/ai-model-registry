@@ -16,6 +16,8 @@ using Terra.AiModelRegistry.App.ErrorCode;
 using Terra.AiModelRegistry.App.Event;
 using Terra.AiModelRegistry.App.Exception;
 using Terra.AiModelRegistry.App.Formatting;
+using Terra.AiModelRegistry.App.Model.Builder;
+using Terra.AiModelRegistry.App.Service.Convention;
 using Terra.AiModelRegistry.App.Service.S3ObjectStorage;
 
 namespace Terra.AiModelRegistry.App.Service.AiModel
@@ -35,6 +37,7 @@ namespace Terra.AiModelRegistry.App.Service.AiModel
 		private readonly IAuthorizationContentResolver _authorizationContentResolver;
 		private readonly EventBroker _eventBroker;
 		private readonly IS3ObjectStorage _s3ObjectStorage;
+		private readonly IConventionService _conventionService;
 
 		public AiModelService(
 			AppDbContext dbContext,
@@ -117,7 +120,7 @@ namespace Terra.AiModelRegistry.App.Service.AiModel
 			data.Description = model.Description?.Trim();
 			data.Version = model.Version?.Trim();
 			data.Metadata = model.Metadata != null ? _jsonHandlingService.ToJsonSafe(model.Metadata) : null;
-			//data.UpdatedAt = DateTime.UtcNow;
+			data.UpdatedAt = DateTime.UtcNow;
 
 			await _dbContext.SaveChangesAsync();
 

@@ -14,5 +14,6 @@ namespace Terra.AiModelRegistry.App.ErrorCode
 		public ErrorDescription ImmutableItem { get; set; }
 		public ErrorDescription UploadRestricted { get; set; }
 		public ErrorDescription UnauthorizedToken { get; set; }
+		public ErrorDescription HashConflict { get; set; }
 	}
 }

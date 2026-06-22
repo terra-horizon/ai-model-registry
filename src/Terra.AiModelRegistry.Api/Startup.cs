@@ -1,34 +1,35 @@
-﻿using Cite.Tools.Json;
-using Terra.AiModelRegistry.App.ErrorCode;
-using Cite.WebTools.CurrentPrincipal.Extensions;
-using Terra.AiModelRegistry.App.Event;
-using Terra.AiModelRegistry.App.Formatting;
+﻿using Cite.Tools.Data.Builder.Extensions;
+using Cite.Tools.Data.Censor.Extensions;
+using Cite.Tools.Data.Deleter.Extensions;
+using Cite.Tools.Data.Query.Extensions;
+using Cite.Tools.Json;
+using Cite.Tools.Logging.Extensions;
+using Cite.Tools.Validation.Extensions;
 using Cite.WebTools.Cors.Extensions;
+using Cite.WebTools.CurrentPrincipal.Extensions;
+using Cite.WebTools.FieldSet;
+using Cite.WebTools.HostingEnvironment.Extensions;
 using Cite.WebTools.Localization.Extensions;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Terra.AiModelRegistry.Api.AccessToken;
 using Terra.AiModelRegistry.Api.Authorization;
 using Terra.AiModelRegistry.Api.Cache;
-using Terra.AiModelRegistry.Api.ForwardedHeaders;
-using Cite.WebTools.HostingEnvironment.Extensions;
-using Cite.Tools.Logging.Extensions;
 using Terra.AiModelRegistry.Api.Exception;
-using Terra.AiModelRegistry.App.LogTracking;
-using Terra.AiModelRegistry.Api.LogTracking;
-using Cite.WebTools.FieldSet;
+using Terra.AiModelRegistry.Api.ForwardedHeaders;
 using Terra.AiModelRegistry.Api.HealthCheck;
-using Terra.AiModelRegistry.App.Accounting;
-using Serilog;
-using Cite.Tools.Data.Censor.Extensions;
-using Terra.AiModelRegistry.App.AccessToken;
-using Terra.AiModelRegistry.Api.AccessToken;
-using Cite.Tools.Data.Query.Extensions;
-using Cite.Tools.Data.Builder.Extensions;
-using Cite.Tools.Validation.Extensions;
+using Terra.AiModelRegistry.Api.LogTracking;
 using Terra.AiModelRegistry.Api.OpenApi;
-using Microsoft.EntityFrameworkCore;
 using Terra.AiModelRegistry.Api.Transaction;
-using Cite.Tools.Data.Deleter.Extensions;
-using Terra.AiModelRegistry.App.Service.Version;
+using Terra.AiModelRegistry.App.AccessToken;
+using Terra.AiModelRegistry.App.Accounting;
+using Terra.AiModelRegistry.App.ErrorCode;
+using Terra.AiModelRegistry.App.Event;
+using Terra.AiModelRegistry.App.Formatting;
+using Terra.AiModelRegistry.App.LogTracking;
+using Terra.AiModelRegistry.App.Service.Convention;
 using Terra.AiModelRegistry.App.Service.S3ObjectStorage;
+using Terra.AiModelRegistry.App.Service.Version;
 
 namespace Terra.AiModelRegistry.Api
 {
@@ -77,7 +78,8 @@ namespace Terra.AiModelRegistry.Api
 
 			services
 				.AddS3ObjectStorageServices(this._config.GetSection("S3ObjectStorage")) //S3 Object Storage Service
-				.AddScoped<IVersionInfoService, VersionInfoService>()
+                .AddConventionServices() //Conventions
+                .AddScoped<IVersionInfoService, VersionInfoService>()
 			;
 
 

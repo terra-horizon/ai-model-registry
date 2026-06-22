@@ -11,18 +11,16 @@ namespace Terra.AiModelRegistry.App.Model
 	public class AiModelDefinition
 	{
 		public Guid? Id { get; set; }
-
 		public string Name { get; set; }
-
 		public string Description { get; set; }
-
 		public string Version { get; set; }
-
 		public Dictionary<string, object> Metadata { get; set; }
-
 		public ModelReferenceKind? ModelReferenceKind { get; set; }
-
 		public string ModelReference { get; set; }
+		public IsActive? IsActive { get; set; }
+		public DateTime? CreatedAt { get; set; }
+		public DateTime? UpdatedAt { get; set; }
+		public string Hash { get; set; }
 	}
 
 	public class AiModelDefinitionCreate
@@ -84,14 +82,11 @@ namespace Terra.AiModelRegistry.App.Model
 	public class AiModelDefinitionPatch
 	{
 		public Guid? Id { get; set; }
-
 		public string Name { get; set; }
-
 		public string Description { get; set; }
-
 		public string Version { get; set; }
-
 		public Dictionary<string, object> Metadata { get; set; }
+		public string Hash { get; set; }
 
 
 		public class PatchValidator : BaseValidator<AiModelDefinitionPatch>
@@ -129,6 +124,10 @@ namespace Terra.AiModelRegistry.App.Model
 					this.Spec()
 						.Must(() => !this.IsEmpty(item.Version))
 						.FailOn(nameof(AiModelDefinitionPatch.Version)).FailWith(this._localizer["validation_required", nameof(AiModelDefinitionPatch.Version)]),
+					//update existing item. Hash must be set
+					this.Spec()
+						.Must(() => this.IsValidHash(item.Hash))
+						.FailOn(nameof(AiModelDefinitionPatch.Hash)).FailWith(this._localizer["validation_required", nameof(AiModelDefinitionPatch.Hash)]),
 				];
 			}
 		}

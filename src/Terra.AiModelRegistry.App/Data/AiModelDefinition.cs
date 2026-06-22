@@ -27,6 +27,16 @@ namespace Terra.AiModelRegistry.App.Data
 
 		[Required]
 		public string ModelReference { get; set; }
+
+
+		[Required]
+		public IsActive IsActive { get; set; }
+
+		[Required]
+		public DateTime CreatedAt { get; set; }
+
+		[Required]
+		public DateTime UpdatedAt { get; set; }
 	}
 
 	public class AiModelDefinitionEntityConfiguration : EntityTypeConfigurationBase<AiModelDefinition>
@@ -43,6 +53,9 @@ namespace Terra.AiModelRegistry.App.Data
 			builder.Property(x => x.Metadata).HasColumnName("metadata");
 			builder.Property(x => x.ModelReferenceKind).HasColumnName("model_reference_kind");
 			builder.Property(x => x.ModelReference).HasColumnName("model_reference");
+			builder.Property(x => x.IsActive).HasColumnName("is_active");
+			builder.Property(x => x.CreatedAt).HasColumnName("created_at");
+			builder.Property(x => x.UpdatedAt).HasColumnName("updated_at");
 		}
 	}
 }
