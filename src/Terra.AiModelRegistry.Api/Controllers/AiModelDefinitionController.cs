@@ -12,7 +12,6 @@ using MongoDB.Bson;
 using Swashbuckle.AspNetCore.Annotations;
 using Terra.AiModelRegistry.Api.Model;
 using Terra.AiModelRegistry.Api.OpenApi;
-using Terra.AiModelRegistry.Api.Transaction;
 using Terra.AiModelRegistry.Api.Validation;
 using Terra.AiModelRegistry.App.Accounting;
 using Terra.AiModelRegistry.App.Censor;
@@ -92,7 +91,6 @@ namespace Terra.AiModelRegistry.Api.Controllers
 		[Authorize]
 		[ModelStateValidationFilter]
 		[ValidationFilter(typeof(App.Model.AiModelDefinitionCreate.CreateValidator), "model")]
-		[ServiceFilter(typeof(AppTransactionFilter))]
 		[SwaggerOperation(Summary = "Create ai model definition")]
 		[SwaggerResponse(statusCode: 200, description: "The persisted ai model definition", type: typeof(App.Model.AiModelDefinition))]
 		[SwaggerResponse(statusCode: 400, description: "Validation problem with the request")]
@@ -129,7 +127,6 @@ namespace Terra.AiModelRegistry.Api.Controllers
 		[Authorize]
 		[ModelStateValidationFilter]
 		[ValidationFilter(typeof(App.Model.AiModelDefinitionPatch.PatchValidator), "model")]
-		[ServiceFilter(typeof(AppTransactionFilter))]
 		[SwaggerOperation(Summary = "Patch ai model definition")]
 		[SwaggerResponse(statusCode: 200, description: "The patched ai model definition", type: typeof(App.Model.AiModelDefinition))]
 		[SwaggerResponse(statusCode: 400, description: "Validation problem with the request")]
@@ -165,7 +162,6 @@ namespace Terra.AiModelRegistry.Api.Controllers
 		[HttpDelete("{id}")]
 		[Authorize]
 		[ModelStateValidationFilter]
-		[ServiceFilter(typeof(AppTransactionFilter))]
 		[SwaggerOperation(Summary = "Deletes the ai model definition by id")]
 		[SwaggerResponse(statusCode: 200, description: "Ai model definition deleted")]
 		[SwaggerResponse(statusCode: 400, description: "Validation problem with the request")]

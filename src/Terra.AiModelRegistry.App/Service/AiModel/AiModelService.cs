@@ -128,9 +128,9 @@ namespace Terra.AiModelRegistry.App.Service.AiModel
 
 			await this._authorizationService.AuthorizeForce(Permission.EditAiModelDefinition);
 
-			Data.AiModelDefinition data = await _dbContext.AiModelDefinitions.FindAsync(model.Id.Value);
+			Data.AiModelDefinition data = await _dbContext.AiModelDefinitions.FindAsync(ObjectId.Parse(model.Id));
 
-			if (data == null) throw new TerraNotFoundException(_localizer["general_notFound", model.Id.Value, nameof(Model.AiModelDefinition)]);
+			if (data == null) throw new TerraNotFoundException(_localizer["general_notFound", model.Id, nameof(Model.AiModelDefinition)]);
 			if (!string.Equals(model.Hash, _conventionService.HashValue(data.UpdatedAt))) throw new TerraValidationException(_errors.HashConflict.Code, string.Format(this._errors.HashConflict.Message, data.Id, nameof(Data.AiModelDefinition)));
 
 			data.Name = model.Name?.Trim();

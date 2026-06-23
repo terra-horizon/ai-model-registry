@@ -2,6 +2,9 @@
   "DB": {
     "ConnectionStrings": {
       "AppDbContext": "%{AppConnectionString}%"
+    },
+    "ConnectionNames": {
+      "AppDbContext": "mongo_service_db"
     }
   }
 }

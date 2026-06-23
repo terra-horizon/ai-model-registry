@@ -11,6 +11,7 @@ using Cite.WebTools.FieldSet;
 using Cite.WebTools.HostingEnvironment.Extensions;
 using Cite.WebTools.Localization.Extensions;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using Serilog;
 using Terra.AiModelRegistry.Api.AccessToken;
 using Terra.AiModelRegistry.Api.Authorization;
@@ -20,7 +21,6 @@ using Terra.AiModelRegistry.Api.ForwardedHeaders;
 using Terra.AiModelRegistry.Api.HealthCheck;
 using Terra.AiModelRegistry.Api.LogTracking;
 using Terra.AiModelRegistry.Api.OpenApi;
-using Terra.AiModelRegistry.Api.Transaction;
 using Terra.AiModelRegistry.App.AccessToken;
 using Terra.AiModelRegistry.App.Accounting;
 using Terra.AiModelRegistry.App.ErrorCode;
@@ -68,14 +68,38 @@ namespace Terra.AiModelRegistry.Api
 				.AddAccessTokenServices(); //Access token management services
 
 			services
+				.AddDbContext<Terra.AiModelRegistry.App.Data.AppDbContext>(options =>
+					options.UseMongoDB(this._config.GetValue<String>("DB:ConnectionStrings:AppDbContext"), this._config.GetValue<String>("DB:ConnectionNames:AppDbContext"))
+				);
+
+			services
 				.AddCensorsAndFactory(typeof(Cite.Tools.Data.Censor.ICensor), typeof(Terra.AiModelRegistry.App.AssemblyHandle)) //Censors
 				.AddQueriesAndFactory(typeof(Cite.Tools.Data.Query.IQuery), typeof(Terra.AiModelRegistry.App.AssemblyHandle)) //Queries
 				.AddBuildersAndFactory(typeof(Cite.Tools.Data.Builder.IBuilder), typeof(Terra.AiModelRegistry.App.AssemblyHandle)) //Builders
 				.AddValidatorsAndFactory(typeof(Cite.Tools.Validation.IValidator), typeof(Terra.AiModelRegistry.App.AssemblyHandle), typeof(Terra.AiModelRegistry.Api.AssemblyHandle)) //Validators
 				.AddDeletersAndFactory(typeof(Cite.Tools.Data.Deleter.IDeleter), typeof(Terra.AiModelRegistry.App.AssemblyHandle)) //Deleters
-				.AddDbContext<Terra.AiModelRegistry.App.Data.AppDbContext>(options => options.UseMongoDB(this._config.GetValue<String>("DB:ConnectionStrings:AppDbContext"))) //DbContext
-				.AddScoped<AppTransactionFilter>() //Transaction Filter
 			;
+
+			//var url = MongoDB.Driver.MongoUrl.Create(this._config.GetValue<String>("DB:ConnectionStrings:AppDbContext"));
+
+			//var foo1= url.AuthenticationSource;
+			//var foo2= url.RetryWrites;
+
+			//var connectionString = _config.GetValue<string>("DB:ConnectionStrings:AppDbContext");
+
+			//var settings = MongoClientSettings.FromConnectionString(connectionString);
+			//settings.RetryWrites = false;
+
+			//var client = new MongoClient(settings);
+
+			//var db = client.GetDatabase("mongo_service_db"); // or your actual app DB
+			//var collection = db.GetCollection<BsonDocument>("driver_test");
+
+			//collection.InsertOne(new BsonDocument
+			//{
+			//	["createdAt"] = DateTime.UtcNow,
+			//	["source"] = "raw-driver-test"
+			//});
 
 			services
 				.AddS3ObjectStorageServices(this._config.GetSection("S3ObjectStorage")) //S3 Object Storage Service

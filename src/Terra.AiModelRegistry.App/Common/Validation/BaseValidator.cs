@@ -54,6 +54,12 @@ namespace Terra.AiModelRegistry.App.Common.Validation
 			return id.HasValue && id.Value != ObjectId.Empty;
 		}
 
+		protected Boolean IsValidObjectId(string id)
+		{
+			ObjectId? objectId = id == null ? null : ObjectId.Parse(id);
+			return objectId.HasValue && objectId.Value != ObjectId.Empty;
+		}
+
 		protected Boolean IsValidGuid(String id)
 		{
 			if (!Guid.TryParse(id, out Guid tmp)) return false;
