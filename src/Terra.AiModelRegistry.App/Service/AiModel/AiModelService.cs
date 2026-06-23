@@ -1,5 +1,4 @@
-﻿using Cite.Tools.Common.Extensions;
-using Cite.Tools.Data.Builder;
+﻿using Cite.Tools.Data.Builder;
 using Cite.Tools.Data.Deleter;
 using Cite.Tools.Data.Query;
 using Cite.Tools.FieldSet;
@@ -8,7 +7,7 @@ using Cite.Tools.Logging;
 using Cite.Tools.Logging.Extensions;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
 using System.Net.Mime;
 using System.Text;
 using Terra.AiModelRegistry.App.Authorization;
@@ -77,26 +76,31 @@ namespace Terra.AiModelRegistry.App.Service.AiModel
 
 			await this._authorizationService.AuthorizeForce(Permission.CreateAiModelDefinition);
 
-			Data.AiModelDefinition data = new AiModelDefinition
+			string reference = null;
+			if (model.ModelReferenceKind == ModelReferenceKind.S3)
 			{
+				using MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(model.ModelReference));
+				reference = await this._s3ObjectStorage.UploadAsync(stream, model.Name, MediaTypeNames.Application.Octet);
+			}
+			else
+			{
+				reference = model.ModelReference?.Trim();
+			}
+
+			AiModelDefinition data = new AiModelDefinition
+			{
+				Id = ObjectId.GenerateNewId(),
 				Name = model.Name.Trim(),
 				Description = model.Description.Trim(),
 				Version = model.Version.Trim(),
 				Metadata = model.Metadata != null ? _jsonHandlingService.ToJsonSafe(model.Metadata) : null,
-				ModelReferenceKind = model.ModelReferenceKind.Value,
-				ModelReference = model.ModelReference?.Trim(),
+				ModelReference = reference,
 				CreatedAt = DateTime.UtcNow,
 				UpdatedAt = DateTime.UtcNow,
 			};
 
 			this._dbContext.AiModelDefinitions.Add(data);
 			await _dbContext.SaveChangesAsync();
-
-			if (data.ModelReferenceKind == ModelReferenceKind.S3)
-			{
-				using MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(model.ModelReference));
-				await this._s3ObjectStorage.UploadAsync(stream, data.Name, MediaTypeNames.Application.Octet);
-			}
 
 			this._logger.Trace("emiting event {0} for {1} items", typeof(OnAiModelDefinitionTouchedArgs), 1);
 			this._eventBroker.EmitAiModelDefinitionTouched(data.Id);
@@ -105,6 +109,17 @@ namespace Terra.AiModelRegistry.App.Service.AiModel
 				.Authorize(AuthorizationFlags.Any)
 				.Build(FieldSet.Build(fields, nameof(Model.AiModelDefinition.Id), nameof(Model.AiModelDefinition.Hash)), data);
 			return created;
+		}
+
+		public async Task<Model.AiModelDefinition> GetAsync(ObjectId id, IFieldSet fields = null)
+		{
+			_logger.Debug(new MapLogEntry("getting AiModelDefinition").And("id", id).And("fields", fields));
+			Data.AiModelDefinition data = await _dbContext.AiModelDefinitions.FindAsync(id);
+			if (data == null) throw new TerraNotFoundException(_localizer["general_notFound", id, nameof(Model.AiModelDefinition)]);
+			Model.AiModelDefinition model = await _builderFactory.Builder<AiModelDefinitionBuilder>()
+				.Authorize(AuthorizationFlags.Any)
+				.Build(FieldSet.Build(fields, nameof(Model.AiModelDefinition.Id)), data);
+			return model;
 		}
 
 		public async Task<Model.AiModelDefinition> PatchAsync(Model.AiModelDefinitionPatch model, IFieldSet fields = null)
@@ -135,7 +150,7 @@ namespace Terra.AiModelRegistry.App.Service.AiModel
 			return patched;
 		}
 
-		public async Task DeleteAndSaveAsync(Guid id)
+		public async Task DeleteAndSaveAsync(ObjectId id)
 		{
 			this._logger.Debug("deleting AiModelDefinition: {id}", id);
 
@@ -144,7 +159,11 @@ namespace Terra.AiModelRegistry.App.Service.AiModel
 			Data.AiModelDefinition data = await this._dbContext.AiModelDefinitions.FindAsync(id);
 			if (data == null) throw new TerraNotFoundException(this._localizer["general_notFound", id, nameof(Model.AiModelDefinition)]);
 
-			await this._deleterFactory.Deleter<AiModelDefinitionDeleter>().DeleteAndSave(id.AsArray());
+			this._dbContext.AiModelDefinitions.Remove(data);
+			await _dbContext.SaveChangesAsync();
+
+			this._logger.Trace("emiting event {0} for {1} items", typeof(OnAiModelDefinitionDeletedArgs), 1);
+			this._eventBroker.EmitAiModelDefinitionTouched(data.Id);
 		}
 	}
 }

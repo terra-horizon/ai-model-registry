@@ -5,6 +5,7 @@ using Terra.AiModelRegistry.App.ErrorCode;
 using Terra.AiModelRegistry.App.Exception;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
+using MongoDB.Bson;
 
 namespace Terra.AiModelRegistry.App.Common.Validation
 {
@@ -46,6 +47,11 @@ namespace Terra.AiModelRegistry.App.Common.Validation
 		protected Boolean IsValidGuid(Guid? guid)
 		{
 			return guid.HasValue && guid.Value != Guid.Empty;
+		}
+
+		protected Boolean IsValidObjectId(ObjectId? id)
+		{
+			return id.HasValue && id.Value != ObjectId.Empty;
 		}
 
 		protected Boolean IsValidGuid(String id)

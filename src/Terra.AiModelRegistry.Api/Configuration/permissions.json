@@ -2,7 +2,39 @@
 	"Permissions": {
 		"ExtendedClaims": [],
 		"Policies": {
-			
+			//AiModelDefinition
+			"BrowseAiModelDefinition": {
+				"Roles": [ "GLOBAL_terra_admin" ],
+				"ContextRoles": [ "terra_amd-browse" ],
+				"Claims": [],
+				"Clients": [],
+				"AllowAnonymous": false,
+				"AllowAuthenticated": false
+			},
+			"CreateAiModelDefinition": {
+				"Roles": [ "GLOBAL_terra_user" ],
+				"ContextRoles": [],
+				"Claims": [],
+				"Clients": [],
+				"AllowAnonymous": false,
+				"AllowAuthenticated": false
+			},
+			"EditAiModelDefinition": {
+				"Roles": [ "GLOBAL_terra_admin" ],
+				"ContextRoles": [ "terra_amd-edit" ],
+				"Claims": [],
+				"Clients": [],
+				"AllowAnonymous": false,
+				"AllowAuthenticated": false
+			},
+			"DeleteAiModelDefinition": {
+				"Roles": [ "GLOBAL_terra_admin" ],
+				"ContextRoles": [ "terra_amd-delete" ],
+				"Claims": [],
+				"Clients": [],
+				"AllowAnonymous": false,
+				"AllowAuthenticated": false
+			}
 		}
 	}
 }

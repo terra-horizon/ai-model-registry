@@ -1,0 +1,42 @@
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      '_id',
+      'version'
+    ],
+    properties: {
+      _id: {
+        bsonType: 'string',
+        maxLength: 30,
+        description: 'Key is stored as _id because of [BsonId]; it is required and must be max 20 characters'
+      },
+      version: {
+        bsonType: 'string',
+        maxLength: 50,
+        description: 'version is required and must be max 50 characters'
+      },
+      released_at: {
+        bsonType: [
+          'date',
+          'null'
+        ],
+        description: 'released_at must be a BSON Date if provided'
+      },
+      deployed_at: {
+        bsonType: [
+          'date',
+          'null'
+        ],
+        description: 'deployed_at must be a BSON Date if provided'
+      },
+      description: {
+        bsonType: [
+          'string',
+          'null'
+        ],
+        description: 'description must be a string if provided'
+      }
+    }
+  }
+}

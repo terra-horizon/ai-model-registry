@@ -1,12 +1,14 @@
-﻿namespace Terra.AiModelRegistry.App.Event
+﻿using MongoDB.Bson;
+
+namespace Terra.AiModelRegistry.App.Event
 {
 	public struct OnAiModelDefinitionDeletedArgs
 	{
-		public OnAiModelDefinitionDeletedArgs(IEnumerable<Guid> aiModelDefinitionIds)
+		public OnAiModelDefinitionDeletedArgs(IEnumerable<ObjectId> aiModelDefinitionIds)
 		{
 			this.AiModelDefinitionIds = aiModelDefinitionIds;
 		}
 
-		public IEnumerable<Guid> AiModelDefinitionIds { get; private set; }
+		public IEnumerable<ObjectId> AiModelDefinitionIds { get; private set; }
 	}
 }

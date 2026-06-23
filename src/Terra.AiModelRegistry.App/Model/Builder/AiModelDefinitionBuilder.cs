@@ -50,7 +50,6 @@ namespace Terra.AiModelRegistry.App.Model.Builder
 				if (fields.HasField(nameof(Model.AiModelDefinition.Description))) m.Description = d.Description;
 				if (fields.HasField(nameof(Model.AiModelDefinition.Version))) m.Version = d.Version;
 				if (fields.HasField(nameof(Model.AiModelDefinition.Metadata))) m.Metadata = this._jsonHandlingService.FromJsonSafe<Dictionary<string, object>>(d.Metadata);
-				if (fields.HasField(nameof(Model.AiModelDefinition.ModelReferenceKind))) m.ModelReferenceKind = d.ModelReferenceKind;
 				if (fields.HasField(nameof(Model.AiModelDefinition.IsActive))) m.IsActive = d.IsActive;
 				if (fields.HasField(nameof(Model.AiModelDefinition.CreatedAt))) m.CreatedAt = d.CreatedAt;
 				if (fields.HasField(nameof(Model.AiModelDefinition.UpdatedAt))) m.UpdatedAt = d.UpdatedAt;

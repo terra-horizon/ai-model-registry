@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace Terra.AiModelRegistry.App.Data
 {
@@ -11,8 +12,9 @@ namespace Terra.AiModelRegistry.App.Data
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			new AiModelDefinitionEntityConfiguration().Configure(modelBuilder.Entity<AiModelDefinition>());
-			new VersionInfoEntityConfiguration().Configure(modelBuilder.Entity<VersionInfo>());
+			base.OnModelCreating(modelBuilder);
+			modelBuilder.Entity<AiModelDefinition>().ToCollection("ai_model_definition");
+			modelBuilder.Entity<VersionInfo>().ToCollection("version_info");
 		}
 	}
 }

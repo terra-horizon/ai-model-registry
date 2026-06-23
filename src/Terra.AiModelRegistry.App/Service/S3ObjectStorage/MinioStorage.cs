@@ -55,7 +55,7 @@ namespace Terra.AiModelRegistry.App.Service.S3ObjectStorage
             return response.ResponseStream;
         }
 
-        public async Task UploadAsync(Stream stream, string objectName, string contentType)
+        public async Task<string> UploadAsync(Stream stream, string objectName, string contentType)
         {
             PutObjectRequest request = new PutObjectRequest
             {
@@ -74,8 +74,9 @@ namespace Terra.AiModelRegistry.App.Service.S3ObjectStorage
             {
                 this._logger.LogError(ex, "Failed to upload object {ObjectName} to bucket {BucketName}", objectName, this._config.BucketName);
                 throw new TerraUnderpinningException(this._errors.UnderpinningService.Code, this._errors.UnderpinningService.Message, (int?)response?.HttpStatusCode, UnderpinningServiceType.S3ObjectStorage, this._logCorrelationScope.CorrelationId);
-            }          
-        }
+            }
+            return Path.Combine(this._config.Endpoint, this._config.BucketName, objectName);
+		}
 
     }
 }

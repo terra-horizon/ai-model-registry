@@ -73,7 +73,7 @@ namespace Terra.AiModelRegistry.Api
 				.AddBuildersAndFactory(typeof(Cite.Tools.Data.Builder.IBuilder), typeof(Terra.AiModelRegistry.App.AssemblyHandle)) //Builders
 				.AddValidatorsAndFactory(typeof(Cite.Tools.Validation.IValidator), typeof(Terra.AiModelRegistry.App.AssemblyHandle), typeof(Terra.AiModelRegistry.Api.AssemblyHandle)) //Validators
 				.AddDeletersAndFactory(typeof(Cite.Tools.Data.Deleter.IDeleter), typeof(Terra.AiModelRegistry.App.AssemblyHandle)) //Deleters
-				.AddDbContext<Terra.AiModelRegistry.App.Data.AppDbContext>(options => options.UseNpgsql(this._config.GetValue<String>("DB:ConnectionStrings:AppDbContext"))) //DbContext
+				.AddDbContext<Terra.AiModelRegistry.App.Data.AppDbContext>(options => options.UseMongoDB(this._config.GetValue<String>("DB:ConnectionStrings:AppDbContext"))) //DbContext
 				.AddScoped<AppTransactionFilter>() //Transaction Filter
 			;
 

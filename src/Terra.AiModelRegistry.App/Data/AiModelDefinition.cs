@@ -1,61 +1,45 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 using Terra.AiModelRegistry.App.Common;
-using Terra.AiModelRegistry.App.Common.Data;
 
 namespace Terra.AiModelRegistry.App.Data
 {
 	public class AiModelDefinition
 	{
-		[Key]
-		[Required]
-		public Guid Id { get; set; }
+		[BsonId]
+		public ObjectId Id { get; set; }
 
+		[BsonElement("name")]
 		[Required]
 		[MaxLength(300)]
 		public string Name { get; set; }
 
+		[BsonElement("description")]
 		public string Description { get; set; }
 
+		[BsonElement("version")]
 		[Required]
 		public string Version { get; set; }
 
+		[BsonElement("metadata")]
 		public string Metadata { get; set; }
 
-		public ModelReferenceKind ModelReferenceKind { get; set; }
-
+		[BsonElement("model_reference")]
 		[Required]
 		public string ModelReference { get; set; }
 
-
+		[BsonElement("is_active")]
+		[BsonRepresentation(BsonType.String)]
 		[Required]
 		public IsActive IsActive { get; set; }
 
+		[BsonElement("created_at")]
 		[Required]
 		public DateTime CreatedAt { get; set; }
 
+		[BsonElement("updated_at")]
 		[Required]
 		public DateTime UpdatedAt { get; set; }
-	}
-
-	public class AiModelDefinitionEntityConfiguration : EntityTypeConfigurationBase<AiModelDefinition>
-	{
-		public AiModelDefinitionEntityConfiguration() : base() { }
-
-		public override void Configure(EntityTypeBuilder<AiModelDefinition> builder)
-		{
-			builder.ToTable("ai_model_definition");
-			builder.Property(x => x.Id).HasColumnName("id");
-			builder.Property(x => x.Name).HasColumnName("name");
-			builder.Property(x => x.Version).HasColumnName("version");
-			builder.Property(x => x.Description).HasColumnName("description");
-			builder.Property(x => x.Metadata).HasColumnName("metadata");
-			builder.Property(x => x.ModelReferenceKind).HasColumnName("model_reference_kind");
-			builder.Property(x => x.ModelReference).HasColumnName("model_reference");
-			builder.Property(x => x.IsActive).HasColumnName("is_active");
-			builder.Property(x => x.CreatedAt).HasColumnName("created_at");
-			builder.Property(x => x.UpdatedAt).HasColumnName("updated_at");
-		}
 	}
 }

@@ -1,12 +1,14 @@
-﻿namespace Terra.AiModelRegistry.App.Event
+﻿using MongoDB.Bson;
+
+namespace Terra.AiModelRegistry.App.Event
 {
 	public struct OnAiModelDefinitionTouchedArgs
 	{
-		public OnAiModelDefinitionTouchedArgs(IEnumerable<Guid> aiModelDefinitionIds)
+		public OnAiModelDefinitionTouchedArgs(IEnumerable<ObjectId> aiModelDefinitionIds)
 		{
 			this.AiModelDefinitionIds = aiModelDefinitionIds;
 		}
 
-		public IEnumerable<Guid> AiModelDefinitionIds { get; private set; }
+		public IEnumerable<ObjectId> AiModelDefinitionIds { get; private set; }
 	}
 }

@@ -1,0 +1,11 @@
+{
+  "_id": "Terra.AiModelRegistry.db",
+  "version": "1.00.001",
+  "released_at": {
+    "$date": "2026-06-23T10:00:00.000Z"
+  },
+  "deployed_at": {
+    "$date": "2026-06-23T10:00:00.000Z"
+  },
+  "description": "Initial model registry version"
+}

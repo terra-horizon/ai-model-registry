@@ -1,4 +1,6 @@
 ﻿
+using MongoDB.Bson;
+
 namespace Terra.AiModelRegistry.App.Event
 {
 	public class EventBroker
@@ -12,12 +14,12 @@ namespace Terra.AiModelRegistry.App.Event
 			remove { this._AiModelDefinitionTouched -= value; }
 		}
 
-		public void EmitAiModelDefinitionTouched(Guid aiModelDefinitionId)
+		public void EmitAiModelDefinitionTouched(ObjectId aiModelDefinitionId)
 		{
-			this.EmitAiModelDefinitionTouched(this, new List<Guid>() { aiModelDefinitionId });
+			this.EmitAiModelDefinitionTouched(this, new List<ObjectId>() { aiModelDefinitionId });
 		}
 
-		public void EmitAiModelDefinitionTouched(IEnumerable<Guid> aiModelDefinitionIds)
+		public void EmitAiModelDefinitionTouched(IEnumerable<ObjectId> aiModelDefinitionIds)
 		{
 			this.EmitAiModelDefinitionTouched(this, aiModelDefinitionIds);
 		}
@@ -27,7 +29,7 @@ namespace Terra.AiModelRegistry.App.Event
 			this.EmitAiModelDefinitionTouched(this, events);
 		}
 
-		public void EmitAiModelDefinitionTouched(object sender, IEnumerable<Guid> aiModelDefinitionIds)
+		public void EmitAiModelDefinitionTouched(object sender, IEnumerable<ObjectId> aiModelDefinitionIds)
 		{
 			this._AiModelDefinitionTouched?.Invoke(sender, new OnAiModelDefinitionTouchedArgs(aiModelDefinitionIds));
 		}
@@ -49,17 +51,17 @@ namespace Terra.AiModelRegistry.App.Event
 			remove { this._AiModelDefinitionDeleted -= value; }
 		}
 
-		public void EmitAiModelDefinitionDeleted(Guid aiModelDefinitionId)
+		public void EmitAiModelDefinitionDeleted(ObjectId aiModelDefinitionId)
 		{
-			this.EmitAiModelDefinitionDeleted(this, new List<Guid>() { aiModelDefinitionId });
+			this.EmitAiModelDefinitionDeleted(this, new List<ObjectId>() { aiModelDefinitionId });
 		}
 
-		public void EmitAiModelDefinitionDeleted(IEnumerable<Guid> aiModelDefinitionIds)
+		public void EmitAiModelDefinitionDeleted(IEnumerable<ObjectId> aiModelDefinitionIds)
 		{
 			this.EmitAiModelDefinitionDeleted(this, aiModelDefinitionIds);
 		}
 
-		public void EmitAiModelDefinitionDeleted(object sender, IEnumerable<Guid> aiModelDefinitionIds)
+		public void EmitAiModelDefinitionDeleted(object sender, IEnumerable<ObjectId> aiModelDefinitionIds)
 		{
 			this._AiModelDefinitionDeleted?.Invoke(sender, new OnAiModelDefinitionDeletedArgs(aiModelDefinitionIds));
 		}

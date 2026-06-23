@@ -2,6 +2,7 @@
 using Cite.Tools.Validation;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
 using Terra.AiModelRegistry.App.Common;
 using Terra.AiModelRegistry.App.Common.Validation;
 using Terra.AiModelRegistry.App.ErrorCode;
@@ -10,12 +11,11 @@ namespace Terra.AiModelRegistry.App.Model
 {
 	public class AiModelDefinition
 	{
-		public Guid? Id { get; set; }
+		public ObjectId? Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public string Version { get; set; }
 		public Dictionary<string, object> Metadata { get; set; }
-		public ModelReferenceKind? ModelReferenceKind { get; set; }
 		public string ModelReference { get; set; }
 		public IsActive? IsActive { get; set; }
 		public DateTime? CreatedAt { get; set; }
@@ -81,7 +81,7 @@ namespace Terra.AiModelRegistry.App.Model
 
 	public class AiModelDefinitionPatch
 	{
-		public Guid? Id { get; set; }
+		public ObjectId? Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public string Version { get; set; }
@@ -109,7 +109,7 @@ namespace Terra.AiModelRegistry.App.Model
 				return [
 					//id must always be set
 					this.Spec()
-						.Must(() => this.IsValidGuid(item.Id))
+						.Must(() => this.IsValidObjectId(item.Id))
 						.FailOn(nameof(AiModelDefinitionPatch.Id)).FailWith(this._localizer["validation_required", nameof(AiModelDefinitionPatch.Id)]),
 					//name must always be set
 					this.Spec()

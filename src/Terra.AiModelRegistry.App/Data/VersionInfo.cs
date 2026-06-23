@@ -1,42 +1,27 @@
-﻿using Terra.AiModelRegistry.App.Common.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Terra.AiModelRegistry.App.Data
 {
 	public class VersionInfo
 	{
-		[Key]
+		[BsonId]
 		[Required]
-		[MaxLength(20)]
-		public String Key { get; set; }
+		[MaxLength(30)]
+		public string Key { get; set; }
 
+		[BsonElement("version")]
 		[Required]
 		[MaxLength(50)]
-		public String Version { get; set; }
+		public string Version { get; set; }
 
-		[Required]
+		[BsonElement("released_at")]
 		public DateTime ReleasedAt { get; set; }
 
-		[Required]
+		[BsonElement("deployed_at")]
 		public DateTime DeployedAt { get; set; }
 
-		public String Description { get; set; }
-	}
-
-	public class VersionInfoEntityConfiguration : EntityTypeConfigurationBase<VersionInfo>
-	{
-		public VersionInfoEntityConfiguration() : base() { }
-
-		public override void Configure(EntityTypeBuilder<VersionInfo> builder)
-		{
-			builder.ToTable("version_info");
-			builder.Property(x => x.Key).HasColumnName("key");
-			builder.Property(x => x.Version).HasColumnName("version");
-			builder.Property(x => x.ReleasedAt).HasColumnName("released_at");
-			builder.Property(x => x.DeployedAt).HasColumnName("deployed_at");
-			builder.Property(x => x.Description).HasColumnName("description");
-		}
+		[BsonElement("description")]
+		public string? Description { get; set; }
 	}
 }

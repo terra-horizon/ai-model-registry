@@ -1,0 +1,62 @@
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'name',
+      'version',
+      'model_reference',
+      'is_active',
+      'created_at',
+      'updated_at'
+    ],
+    properties: {
+      _id: {
+        bsonType: 'objectId',
+        description: '_id must be an ObjectId'
+      },
+      name: {
+        bsonType: 'string',
+        maxLength: 300,
+        description: 'name is required and must be a string with max length 300'
+      },
+      description: {
+        bsonType: [
+          'string',
+          'null'
+        ],
+        description: 'description must be a string if provided'
+      },
+      version: {
+        bsonType: 'string',
+        description: 'version is required and must be a string'
+      },
+      metadata: {
+        bsonType: [
+          'string',
+          'null'
+        ],
+        description: 'metadata must be a string if provided'
+      },
+      model_reference: {
+        bsonType: 'string',
+        description: 'model_reference is required and must be a string'
+      },
+      is_active: {
+        bsonType: 'string',
+        'enum': [
+          'Inactive',
+          'Active'
+        ],
+        description: 'is_active is required and must be stored as a string'
+      },
+      created_at: {
+        bsonType: 'date',
+        description: 'created_at is required and must be a BSON Date'
+      },
+      updated_at: {
+        bsonType: 'date',
+        description: 'updated_at is required and must be a BSON Date'
+      }
+    }
+  }
+}

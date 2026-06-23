@@ -2,7 +2,7 @@
 	"Idp": {
 		"Client": {
 			"Authority": "%{IdpAuthority}%",
-			"ClientId": "terra-ai-model-registry",
+			"ClientId": "ai-model-registry",
 			"ClientSecret": "%{IdpClientSecret}%",
 			"ClientAccessTokenUrl": "%{IdpClientAccessTokenUrl}%",
 			"RequireHttps": true,
