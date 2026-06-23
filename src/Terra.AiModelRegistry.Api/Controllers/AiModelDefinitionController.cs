@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Swashbuckle.AspNetCore.Annotations;
 using Terra.AiModelRegistry.Api.Model;
+using Terra.AiModelRegistry.Api.Model.Lookup;
 using Terra.AiModelRegistry.Api.OpenApi;
 using Terra.AiModelRegistry.Api.Transaction;
 using Terra.AiModelRegistry.Api.Validation;
@@ -20,6 +21,7 @@ using Terra.AiModelRegistry.App.Common;
 using Terra.AiModelRegistry.App.ErrorCode;
 using Terra.AiModelRegistry.App.Exception;
 using Terra.AiModelRegistry.App.Model.Builder;
+using Terra.AiModelRegistry.App.Query;
 using Terra.AiModelRegistry.App.Service.AiModel;
 
 namespace Terra.AiModelRegistry.Api.Controllers
@@ -152,7 +154,7 @@ namespace Terra.AiModelRegistry.Api.Controllers
 			this._logger.Debug(new MapLogEntry("persisting").And("type", nameof(App.Model.AiModelDefinitionCreate)).And("fields", fieldSet));
 
 			//GOTCHA: Ommiting browse permission check in case of new
-			IFieldSet censoredFields = await this._censorFactory.Censor<AiModelDefinitionCensor>().Censor(fieldSet, CensorContext.AsCensor(), !model.Id.HasValue);
+			IFieldSet censoredFields = await this._censorFactory.Censor<AiModelDefinitionCensor>().Censor(fieldSet, CensorContext.AsCensor());
 			if (fieldSet.CensoredAsUnauthorized(censoredFields)) throw new TerraForbiddenException(this._errors.Forbidden.Code, this._errors.Forbidden.Message);
 
 			App.Model.AiModelDefinition persisted = await this._aiModelService.CreateAsync(model, censoredFields);
@@ -190,7 +192,7 @@ namespace Terra.AiModelRegistry.Api.Controllers
 			this._logger.Debug(new MapLogEntry("patching").And("type", nameof(App.Model.AiModelDefinitionPatch)).And("fields", fieldSet));
 
 			//GOTCHA: Ommiting browse permission check in case of new
-			IFieldSet censoredFields = await this._censorFactory.Censor<AiModelDefinitionCensor>().Censor(fieldSet, CensorContext.AsCensor(), !model.Id.HasValue);
+			IFieldSet censoredFields = await this._censorFactory.Censor<AiModelDefinitionCensor>().Censor(fieldSet, CensorContext.AsCensor());
 			if (fieldSet.CensoredAsUnauthorized(censoredFields)) throw new TerraForbiddenException(this._errors.Forbidden.Code, this._errors.Forbidden.Message);
 
 			App.Model.AiModelDefinition persisted = await this._aiModelService.PatchAsync(model, censoredFields);
