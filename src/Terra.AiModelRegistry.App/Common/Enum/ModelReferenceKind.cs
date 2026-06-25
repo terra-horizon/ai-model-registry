@@ -5,8 +5,8 @@ namespace Terra.AiModelRegistry.App.Common
 	public enum ModelReferenceKind : short
 	{
 		[Description("Data is accessible via an HTTP or HTTPS endpoint.")]
-		Http = 1,
+		Http = 0,
 		[Description("Data is accessible via an S3-compatible storage server.")]
-		S3 = 2,
+		S3 = 1,
 	}
 }

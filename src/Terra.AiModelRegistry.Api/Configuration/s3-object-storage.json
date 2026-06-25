@@ -3,7 +3,7 @@
     "Endpoint": "%{S3ObjectStorageEndpoint}%",
     "AccessKey": "%{S3ObjectStorageAccessKey}%",
     "SecretKey": "%{S3ObjectStorageSecretKey}%",
-    "BucketName": "default",
+    "BucketName": "terra-bucket",
     "Region": "us-east-1"
   }
 }
